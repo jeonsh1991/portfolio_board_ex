@@ -15,10 +15,6 @@
 </head>
 <body>
 <%
-int pageNumber = 1;
-if(request.getParameter("pageNumber") != null) {
-	pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-}
 String s_Name = null;
 if(session.getAttribute("s_Name") != null) {
 	s_Name = (String) session.getAttribute("s_Name");
@@ -58,36 +54,17 @@ if(s_Name != null) {
 </header>
 
 <div id="container">
-<table id="bTable">
-	<tr height=35px style="background-color:#4374D9; color: white;">
-		<td style="width:100px"><div class="verticalLine">글번호</div></td>
-		<td style="width:100px"><div class="verticalLine">공지</div></td>
-		<td style="width:700px" ><div class="verticalLine">글제목</div></td>
-		<td style="width: 150px"><div class="verticalLine">운영자</div></td>
-		<td style="width: 150px"><div class="verticalLine">08-28</div></td>
+<table id="wrTable">
+	<tr id="1rowstyle">
+		<td><select name="categorySelect" id="categorySelect">
+			<option value="chatter">잡담</option>
+			<option value="question">질문</option>
+			<option value="information">정보</option>
+			<option value="tip">팁</option>
+		</select></td>
+		<td><input type="text" id="titleEdit" name="titleEdit" placeholder="제목" style="width:500px"></td>
 	</tr>
-	<tr>
-		<td colspan="5" style="border-bottom: 2px solid #ccc; padding:0;">
-	</tr>
-	<%
-	BoardDAO boardDAO = new BoardDAO();
-	ArrayList<Board> list = boardDAO.getList(pageNumber);
-	for(int i = 0; i<list.size(); i++){
-	%>
-	<tr style="background-color:#eee; height:35px; max-height:35px">
-		<td style="width:50px"><div class="verticalLine"><%=list.get(i).getNum() %></div></td>
-		<td style="width:50px"><div class="verticalLine"><%=list.get(i).getCategory() %></div></td>
-		<td style="width:800px" ><div class="verticalLine"><%=list.get(i).getTitle() %></div></td>
-		<td style="width: 150px"><div class="verticalLine"><%=list.get(i).getuNick() %></div></td>
-		<td style="width: 300px; line-height: 22px;"><div class="verticalLine"><%=list.get(i).getDate().substring(0,11)+list.get(i).getDate().substring(11,13)+"시"+list.get(i).getDate().substring(14,16)+"분" %></div></td>
-	</tr>
-	<tr>
-		<td colspan="5" style="border-bottom: 1px solid #ccc; padding:0;">
-	</tr>
-	<%} %>
 </table>
-<br><input type="button" class="boardBtn" value="글쓰기" onclick="javascript:location.href='boardWrite.jsp'">
-</div>
 </div>
 <%}
 else {%>

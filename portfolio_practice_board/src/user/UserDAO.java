@@ -55,5 +55,19 @@ public class UserDAO {
 		}
 		return -1;
 	}
+	public int idChk(String uId) {
+		String sql = "select uId from member where uId=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, uId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return 1; //중복아이디가 있을경우 1 리턴
+			}else return 0; //중복아이디가 없을경우 0 리턴
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 
 }
