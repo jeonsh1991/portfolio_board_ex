@@ -217,8 +217,8 @@ ul {
 }
 #container {
 	position: absolute;
-	margin-top: 15em;
-	margin-left: 20em;
+	margin-top: 8em;
+	margin-left: 23em;
 }
 #bTable {
 	font-family: 'Do Hyeon', sans-serif;
@@ -241,9 +241,6 @@ ul {
 	float:right;
 	background-color: #4374D9;
 }
-tr {
-	max-height:35px;	
-}
 #wrTable {
 	border: 1px solid #ddd;
 	height: 500px;
@@ -259,7 +256,22 @@ tr {
 }
 #titleEdit{
 	border: 1px solid #bbb;
-	height: 50px;
+	height: 45px;
 	border-radius: 5px;
 	font-size: 1.5em;
+}
+#writeActionBtn{
+	border: none;
+	border-radius: 5px;
+	width: 120px;
+	height: 40px;
+	background-color: #ddd;
+	font-size: 1.3em;
+	float:right;
+}
+#pageTable {
+	border: 1px solid #ddd;
+}
+.selectPage {
+	color: red;
 }

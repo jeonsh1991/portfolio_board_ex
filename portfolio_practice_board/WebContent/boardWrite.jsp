@@ -3,11 +3,25 @@
 <%@ page import="board.Board" %>
 <%@ page import="board.BoardDAO" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.io.PrintWriter" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="//cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
+<script>
+function boardSubmit() {
+	var f = document.getElementById("boardId");
+	var titleChk = document.getElementById("titleEdit").value;
+	if(titleChk == ""){
+		alert('제목을 입력해주세요.');
+	}
+	else {
+		f.submit();
+	}
+}
+</script>
 <link rel="stylesheet" type="text/css" href="boardCss.css">
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo|Faster+One|Londrina+Solid|Alegreya+Sans+SC:900|Ubuntu:500|Allerta+Stencil|Do+Hyeon|Jua" rel="stylesheet">
 <style>
@@ -52,19 +66,27 @@ if(s_Name != null) {
 </ul>
 </div>
 </header>
-
 <div id="container">
+<form method="post" action="writeAction.jsp" id="boardId">
 <table id="wrTable">
 	<tr id="1rowstyle">
-		<td><select name="categorySelect" id="categorySelect">
-			<option value="chatter">잡담</option>
-			<option value="question">질문</option>
-			<option value="information">정보</option>
-			<option value="tip">팁</option>
+		<td><select name="categorySelect" id="categorySelect" name="categorySelect">
+			<option value="잡담">잡담</option>
+			<option value="질문">질문</option>
+			<option value="정보">정보</option>
+			<option value="팁">팁</option>
 		</select></td>
-		<td><input type="text" id="titleEdit" name="titleEdit" placeholder="제목" style="width:500px"></td>
+		<td><input type="text" id="titleEdit" name="titleEdit" placeholder="제목" style="width:1000px"></td>
+	</tr>
+	<tr id="2rowstyle">
+		<td colspan="2"><input type="text" id="editor1" name="editor1" class="editor1"></td>
+		<script>
+		CKEDITOR.replace('editor1', {width:'100%', height:'500px'});
+		</script>
 	</tr>
 </table>
+<input type="button" value="올리기" id="writeActionBtn" onclick="boardSubmit()">
+</form>
 </div>
 <%}
 else {%>
