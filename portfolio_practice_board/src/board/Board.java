@@ -5,6 +5,7 @@ public class Board {
 	private String category;
 	private String title;
 	private String uNick;
+	private String Nickname;
 	private String Content;
 	private String date;
 	private int available;
@@ -32,6 +33,12 @@ public class Board {
 	}
 	public void setuNick(String uNick) {
 		this.uNick = uNick;
+	}
+	public String getNickname() {
+		return Nickname;
+	}
+	public void setNickname(String Nickname) {
+		this.Nickname = Nickname;
 	}
 	public String getContent() {
 		return Content;

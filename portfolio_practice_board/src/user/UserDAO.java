@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class UserDAO {
 	
@@ -68,6 +69,31 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+	public String getInfo(String id) {
+		String sql = "select uNick from member where uId=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				pstmt.close();
+			}catch(Throwable e) {
+				e.printStackTrace();
+			}try {
+				rs.close();
+			}catch(Throwable e) {
+				e.printStackTrace();
+			}
+		}
+		return "";
 	}
 
 }
