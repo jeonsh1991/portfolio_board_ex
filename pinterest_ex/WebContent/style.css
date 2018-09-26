@@ -4,6 +4,7 @@
 	min-width: 400px;
 	margin: 50px auto;
 }
+
 #columns {
 	-webkit-column-count: 2;
 	-webkit-column-gap: 15px;
