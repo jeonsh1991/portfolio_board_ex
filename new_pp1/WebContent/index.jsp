@@ -6,10 +6,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, user-scalable=no" />
 <title>Insert title here</title>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="1008172242633-dbgdamskcigv6coibmumfoe9149cvcck.apps.googleusercontent.com">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="style.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
 <style>
 body {
 	margin: 0 auto;
@@ -92,6 +96,38 @@ padding-top: 0px;
 .fontColorBlue {
 	color: blue;
 }
+
+#loginModalContent {
+	width: 1200px;
+}
+#loginModalBody {
+	top: 100px;
+	height: 400px;
+}
+.modal-form {
+	float: left;
+	margin-left: 50px;
+}
+#loginModalHeader {
+	text-align: center;
+}
+#loginModal {
+	top: 100px;
+	left: -500px;
+}
+
+#APILogin {
+float: right;
+margin-right: 150px;
+
+}
+.verticalLine {
+}
+.modal-footer {
+	clear: both;
+}
+
+
 @media (min-width: 1000px) {
 	#columns {
 	-webkit-column-count: 4;
@@ -124,8 +160,48 @@ padding-top: 0px;
 
 <script>
 
+function onSignIn(googleUser) { //구글 로그인 스크립트
+	var profile = googleUser.getBasicProfile();
+	var id_token = googleUser.getAuthResponse().id_token;
+	console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+	console.log('Name: ' + profile.getName());
+	console.log('Image URL: ' + profile.getImageUrl());
+	console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+	  
+	  
+		var f = document.createElement("form");
+		f.setAttribute("method", "post");
+		f.setAttribute("action", "googlesuccess.jsp");
+		document.body.appendChild(f);
+				    
+		var googleID = document.createElement("input");
+		googleID.setAttribute("type", "hidden");
+		googleID.setAttribute("name", "apiID");
+		googleID.setAttribute("value", profile.getEmail());
+		f.appendChild(googleID);
+				    
+		var googleName = document.createElement("input");
+		googleName.setAttribute("type", "hidden");
+		googleName.setAttribute("name", "apiName");
+		googleName.setAttribute("value", profile.getName());
+		f.appendChild(googleName);
+				    
+		var googleImage = document.createElement("input");
+		googleImage.setAttribute("type", "hidden");
+		googleImage.setAttribute("name", "apiImage");
+		googleImage.setAttribute("value", profile.getImageUrl());
+		f.appendChild(googleImage);
+				    
+		f.submit();
+	
+}
 
-function alreadyLogin() {
+
+
+
+
+
+function alreadyLogin() { //네이버로 로그인되어있는 상태
 	var name = naverLogin.user.getName();
 	
 	if(name != null) {
@@ -1037,12 +1113,13 @@ function alreadyLogin() {
 	
 <div class="modal fade" id="loginModal" role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
+		<div class="modal-content" id="loginModalContent">
+			<div class="modal-header" id="loginModalHeader">
 				<button type="button" class="close" data-dismiss="modal">X</button>
 				<h1>로그인</h1>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body" id="loginModalBody">
+			<div class="modal-form">
 				<form method="post" action="loginAction.jsp">
 				<table>
 				<tr>
@@ -1057,7 +1134,24 @@ function alreadyLogin() {
 				<tr>
 					<td><button type="button" class="btn btn-default" onclick="loginFunction()">로그인</button>
 				</tr>
+				</table>
+				</form>
+			</div>
+				<div class="verticalLine"></div>
+				<div id="APILogin">
 				<div id="naverIdLogin"><a id="naverIdLogin_loginButton" href="#" role="button"><img src="https://static.nid.naver.com/oauth/big_g.PNG" width=320></a></div>
+				<div class="g-signin2" data-onsuccess="onSignIn" ></div>
+				<a href="#" onclick="signOut();">Sign out</a>
+<script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
+				</div>
+				
 				<script src="naveridlogin_js_sdk_2.0.0.js"></script>
 				<script>
 		
@@ -1103,8 +1197,6 @@ function alreadyLogin() {
 			});
 		}
 	</script>
-				</table>
-				</form>
 			</div>
 			<div class="modal-footer"><button type="button" class="close" data-dismiss="modal">닫기</button>
 			</div>
@@ -1196,5 +1288,6 @@ function alreadyLogin() {
 			</div>
 		</div>
 	</div>
+	
 </body>
 </html>
